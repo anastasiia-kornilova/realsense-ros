@@ -14,8 +14,8 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
 
   <arg name="fisheye_width"       default="-1"/> 
   <arg name="fisheye_height"      default="-1"/>
-  <arg name="enable_fisheye1"     default="false"/>
-  <arg name="enable_fisheye2"     default="false"/>
+  <arg name="enable_fisheye1"     default="true"/>
+  <arg name="enable_fisheye2"     default="true"/>
 
   <arg name="fisheye_fps"         default="-1"/>
 
@@ -33,7 +33,14 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
   <arg name="unite_imu_method"      default=""/>
 
   <arg name="publish_odom_tf"     default="true"/>
-  
+
+  <arg name="enable_auto_exposure" default="true"/>
+
+  <rosparam>
+      camera/tracking_module/enable_auto_exposure: true
+      camera/tracking_module/exposure: 1000
+  </rosparam>
+
   <group ns="$(arg camera)">
     <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
       <arg name="tf_prefix"                value="$(arg tf_prefix)"/>
@@ -62,6 +69,8 @@ https://github.com/IntelRealSense/librealsense/blob/master/third-party/libtm/lib
       <arg name="unite_imu_method"         value="$(arg unite_imu_method)"/>
 
       <arg name="publish_odom_tf"          value="$(arg publish_odom_tf)"/>
+
+      <arg name="enable_auto_exposure"     value="$(arg enable_auto_exposure)"/>
     </include>
   </group>
 </launch>

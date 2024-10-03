@@ -868,6 +868,8 @@ void BaseRealSenseNode::setupDevice()
 
         _dev_sensors = _dev.query_sensors();
 
+        bool enable_auto_exposure;
+        _pnh.param("enable_auto_exposure", enable_auto_exposure, true);
 
         std::function<void(rs2::frame)> frame_callback_function, imu_callback_function;
         if (_sync_frames)
@@ -897,6 +899,7 @@ void BaseRealSenseNode::setupDevice()
         ROS_INFO_STREAM("Device Sensors: ");
         for(auto&& sensor : _dev_sensors)
         {
+            if (!enable_auto_exposure) sensor.set_option(RS2_OPTION_ENABLE_AUTO_EXPOSURE, enable_auto_exposure);
             for (auto& profile : sensor.get_stream_profiles())
             {
                 auto video_profile = profile.as<rs2::video_stream_profile>();
